@@ -68,6 +68,10 @@ async def serve_carteiras(request: Request):
 async def serve_relatorios(request: Request):
     return templates.TemplateResponse("relatorios.html", {"request": request})
 
+@app.get("/guia-dev", response_class=HTMLResponse)
+async def serve_guia_dev(request: Request):
+    return templates.TemplateResponse("guia_dev.html", {"request": request})
+
 @app.get("/api/transactions")
 def get_all_transactions():
     conn = get_connection()
