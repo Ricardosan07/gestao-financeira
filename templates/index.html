@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Finance Dashboard - Cash Flow</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1e94f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "success": "#10b981",
+                        "danger": "#ef4444",
+                        "warning": "#f59e0b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+    <!-- Header -->
+    <header
+        class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+            <div
+                class="size-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-primary/20">
+                <span class="material-symbols-outlined text-primary">person</span>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold leading-tight tracking-tight">Projeção de Caixa</h1>
+                <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Dashboard Financeiro</p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button
+                class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 relative">
+                <span class="material-symbols-outlined">notifications</span>
+                <span
+                    class="absolute top-2 right-2 size-2 bg-danger rounded-full border-2 border-background-light"></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 space-y-6">
+        <!-- Add advice banner -->
+        <div
+            class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 p-3 rounded-xl text-sm font-medium border border-indigo-100 dark:border-indigo-800/50 flex items-center gap-2 shadow-sm">
+            <span class="material-symbols-outlined text-lg">lightbulb</span>
+            <span id="advice-text">Analisando suas finanças...</span>
+        </div>
+
+        <!-- Large Saldo Card -->
+        <div class="bg-primary rounded-xl p-6 shadow-lg shadow-primary/20 text-white relative overflow-hidden">
+            <div class="absolute -right-8 -top-8 size-32 bg-white/10 rounded-full blur-2xl"></div>
+            <p class="text-sm font-medium opacity-80 mb-1">Saldo Disponível</p>
+            <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-bold tracking-tight" id="tot-saldo-main">$0</span>
+                <span class="text-lg opacity-70" id="tot-saldo-cents">,00</span>
+            </div>
+        </div>
+
+        <!-- Summary Grid -->
+        <div class="grid grid-cols-2 gap-3">
+            <div
+                class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-success">arrow_downward</span>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Entradas</p>
+                </div>
+                <p id="tot-entradas" class="text-xl font-bold text-success">$0.00</p>
+            </div>
+            <div
+                class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-danger">arrow_upward</span>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Saídas</p>
+                </div>
+                <p id="tot-saidas" class="text-xl font-bold text-danger">$0.00</p>
+            </div>
+            <div
+                class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-warning">today</span>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Diário</p>
+                </div>
+                <p id="tot-diario" class="text-xl font-bold text-warning">$0.00</p>
+            </div>
+            <div
+                class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Investido</p>
+                </div>
+                <p id="tot-investido" class="text-xl font-bold text-primary">$0.00</p>
+            </div>
+        </div>
+
+        <!-- Full Month Calendar (Termômetro) -->
+        <section id="calendar-section"
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm relative transition-all outline-none">
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="calendar-month-name" class="text-base font-bold">Mês Atual</h2>
+                <div class="flex gap-1">
+                    <button id="btn-prev-month"
+                        class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="material-symbols-outlined text-sm">chevron_left</span>
+                    </button>
+                    <button id="btn-next-month"
+                        class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-7 gap-1 mb-2">
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Seg</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Ter</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Qua</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Qui</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Sex</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Sáb</div>
+                <div class="text-[10px] font-bold text-center text-slate-400 uppercase">Dom</div>
+            </div>
+            <div id="calendar-grid" class="grid grid-cols-7 gap-1">
+                <!-- dynamic items here -->
+            </div>
+        </section>
+
+        <!-- Future Cash Flow Chart -->
+        <section
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-base font-bold">Fluxo de Caixa Futuro</h2>
+                <a href="/relatorios" class="text-primary text-xs font-bold hover:underline flex items-center gap-1">
+                    Relatórios <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                </a>
+            </div>
+            <div id="projection-chart"
+                class="flex items-end justify-start gap-4 h-32 px-2 pt-4 overflow-x-auto no-scrollbar scroll-smooth">
+                <!-- dynamic chart here -->
+            </div>
+        </section>
+
+        <!-- Quick Entry Form -->
+        <section
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm">
+            <h2 class="text-base font-bold mb-4">Lançamento Rápido</h2>
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold uppercase text-slate-400">Data</label>
+                        <input id="input-date"
+                            class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50"
+                            type="date" required />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold uppercase text-slate-400">Valor</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+                            <input id="input-amount"
+                                class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm pl-7 focus:ring-2 focus:ring-primary/50"
+                                placeholder="0.00" type="number" step="0.01" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase text-slate-400">Descrição</label>
+                    <input id="input-desc"
+                        class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50"
+                        placeholder="Ex: Mercado, Conta de Luz" type="text" required />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase text-slate-400">Categoria</label>
+                    <select id="input-type"
+                        class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50">
+                        <option value="Entradas (Receitas)">Entradas (Receitas)</option>
+                        <option value="Saídas (Despesas fixas programadas)">Saídas (Despesas fixas programadas)</option>
+                        <option value="Gastos Diários (Despesas variáveis)">Gastos Diários (Despesas variáveis)</option>
+                        <option value="Investimento">Investimento</option>
+                    </select>
+                </div>
+                <button id="submit-btn"
+                    class="w-full bg-primary text-white font-bold py-3 rounded-xl shadow-md shadow-primary/30 hover:bg-primary/90 transition-colors">
+                    Registrar Lançamento
+                </button>
+            </div>
+        </section>
+
+        <!-- Recent History -->
+        <section class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h2 class="text-base font-bold">Histórico Recente</h2>
+            </div>
+            <div id="history-list" class="space-y-2">
+                <!-- dynamic history here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 px-4 pb-6 pt-2 flex justify-between items-center z-50">
+        <a class="flex flex-1 flex-col items-center gap-1 text-primary transition-colors" href="/">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">home</span>
+            <p class="text-[10px] font-medium uppercase tracking-wider">Início</p>
+        </a>
+        <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/extrato">
+            <span class="material-symbols-outlined">list_alt</span>
+            <p class="text-[10px] font-medium uppercase tracking-wider">Extrato</p>
+        </a>
+        <div class="relative -top-8 flex flex-1 justify-center">
+            <a href="/#input-date" class="size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+                <span class="material-symbols-outlined text-3xl">add</span>
+            </a>
+        </div>
+        <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/carteiras">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <p class="text-[10px] font-medium uppercase tracking-wider">Carteiras</p>
+        </a>
+        <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/perfil">
+            <span class="material-symbols-outlined">person</span>
+            <p class="text-[10px] font-medium uppercase tracking-wider">Perfil</p>
+        </a>
+    </nav>
+
+    <script>
+        document.getElementById('input-date').valueAsDate = new Date();
+
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth() + 1; // 1 to 12
+
+        function formatCurrency(value) {
+            return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        async function loadData() {
+            try {
+                const res = await fetch(`/api/data?year=${currentYear}&month=${currentMonth}`);
+                const data = await res.json();
+
+                // Format main saldo
+                const saldo = data.summary.saldo;
+                const saldoSplit = saldo.toFixed(2).split('.');
+                const saldoMain = Number(saldoSplit[0]).toLocaleString('pt-BR');
+                const saldoCents = ',' + saldoSplit[1];
+                document.getElementById('tot-saldo-main').innerText = `$${saldoMain}`;
+                document.getElementById('tot-saldo-cents').innerText = saldoCents;
+
+                // Update summary grid
+                document.getElementById('tot-entradas').innerText = `$${formatCurrency(data.summary.entradas)}`;
+                document.getElementById('tot-saidas').innerText = `$${formatCurrency(data.summary.saidas)}`;
+                document.getElementById('tot-diario').innerText = `$${formatCurrency(data.summary.diarios)}`;
+                document.getElementById('tot-investido').innerText = `$${formatCurrency(data.summary.investido)}`;
+
+                // Update Advice and Month
+                if (data.advice) {
+                    document.getElementById('advice-text').innerText = data.advice;
+                }
+                document.getElementById('calendar-month-name').innerText = data.monthName || "Mês Atual";
+
+                // Update Calendar Thermometer
+                const thermoContainer = document.getElementById('calendar-grid');
+                thermoContainer.innerHTML = '';
+
+                if (data.thermometer.length > 0) {
+                    const startWeekday = data.thermometer[0].dayName;
+                    const weekdays = ["SEG", "TER", "QUA", "QUI", "SEX", "SAB", "DOM"];
+                    const emptySlots = weekdays.indexOf(startWeekday);
+
+                    for (let i = 0; i < emptySlots; i++) {
+                        thermoContainer.innerHTML += `<div></div>`;
+                    }
+
+                    data.thermometer.forEach(d => {
+                        let colorTheme = 'slate';
+                        let bgColor = 'bg-slate-100 dark:bg-slate-800';
+                        let borderColor = 'border-slate-200 dark:border-slate-700';
+                        let textColor = 'text-slate-600 dark:text-slate-400';
+
+                        if (d.flow > 0) {
+                            colorTheme = 'success';
+                            bgColor = 'bg-success/20';
+                            borderColor = 'border-success/30';
+                            textColor = 'text-success';
+                        } else if (d.flow < 0) {
+                            colorTheme = 'danger';
+                            bgColor = 'bg-danger/20';
+                            borderColor = 'border-danger/30';
+                            textColor = 'text-danger';
+                        }
+
+                        const todayRing = d.isToday ? 'ring-2 ring-primary ring-offset-1 dark:ring-offset-slate-900' : '';
+                        const formattedFlow = d.flow >= 0 ? `$${formatCurrency(d.flow)}` : `-$${formatCurrency(Math.abs(d.flow))}`;
+
+                        thermoContainer.innerHTML += `
+                        <div class="${bgColor} border ${borderColor} rounded p-1 flex flex-col items-center justify-center min-h-[50px] ${todayRing}">
+                            <span class="text-[10px] font-bold ${textColor}">${d.dayNum}</span>
+                            <span class="text-[9px] ${textColor}/80">${formattedFlow}</span>
+                        </div>
+                        `;
+                    });
+                }
+
+                // Update Projection Chart
+                const chartContainer = document.getElementById('projection-chart');
+                chartContainer.innerHTML = '';
+
+                let absValues = data.projection.map(d => Math.abs(d.saldo));
+                let maxSaldo = Math.max(...absValues, 1);
+
+                const step = Math.ceil(data.projection.length / 10);
+
+                for (let i = 0; i < data.projection.length; i += step) {
+                    const d = data.projection[i];
+                    const isPositive = d.saldo >= 0;
+                    const colorTheme = isPositive ? 'success' : 'danger';
+                    const height = Math.min(100, Math.max(10, Math.abs(d.saldo) / maxSaldo * 100));
+
+                    // short value like $1.2k
+                    let val = Math.abs(d.saldo);
+                    let valStr = "";
+                    if (val >= 1000) { valStr = (val / 1000).toFixed(1) + "k"; }
+                    else { valStr = val.toFixed(0); }
+
+                    const valueStr = isPositive ? `+$${valStr}` : `-$${valStr}`;
+
+                    chartContainer.innerHTML += `
+                    <div class="flex flex-none flex-col items-center gap-2 group w-12">
+                        <div class="w-8 bg-${colorTheme} rounded-t-lg relative transition-all" style="height: ${height}%;">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-bold text-${colorTheme} whitespace-nowrap">${valueStr}</span>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-500">${d.label}</span>
+                    </div>
+                    `;
+                }
+
+                // Update history
+                const historyContainer = document.getElementById('history-list');
+                historyContainer.innerHTML = '';
+                if (data.history.length === 0) {
+                    historyContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Nenhum lançamento registrado.</p>';
+                }
+
+                data.history.forEach(tx => {
+                    let icon = 'add';
+                    let colorTheme = 'success';
+                    let typeLabel = "Entrada";
+                    let amountText = `+$${formatCurrency(tx.amount)}`;
+
+                    if (tx.category.includes('Saídas')) {
+                        icon = 'arrow_upward';
+                        colorTheme = 'danger';
+                        typeLabel = "Saída Fixa";
+                        amountText = `-$${formatCurrency(tx.amount)}`;
+                    } else if (tx.category.includes('Diários')) {
+                        icon = 'shopping_cart';
+                        colorTheme = 'warning';
+                        typeLabel = "Variável";
+                        amountText = `-$${formatCurrency(tx.amount)}`;
+                    } else if (tx.category.includes('Investimento')) {
+                        icon = 'account_balance_wallet';
+                        colorTheme = 'primary';
+                        typeLabel = "Investimento";
+                        amountText = `-$${formatCurrency(tx.amount)}`;
+                    }
+
+                    // Format date (simple)
+                    const dParts = tx.date.split('-');
+                    const shortDate = dParts.length === 3 ? `${dParts[2]}/${dParts[1]}` : tx.date;
+
+                    historyContainer.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <div class="size-10 rounded-lg bg-${colorTheme}/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-${colorTheme}">${icon}</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold truncate max-w-[150px]">${tx.description}</p>
+                                <p class="text-[10px] text-slate-500">${typeLabel} • ${shortDate}</p>
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-${colorTheme}">${amountText}</p>
+                    </div>
+                    `;
+                });
+
+            } catch (e) {
+                console.error("Erro ao carregar os dados", e);
+            }
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', async () => {
+            const dateVal = document.getElementById('input-date').value;
+            const amountVal = document.getElementById('input-amount').value;
+            const descVal = document.getElementById('input-desc').value;
+            const typeVal = document.getElementById('input-type').value;
+
+            if (!dateVal || !amountVal || !descVal) {
+                alert("Preencha todos os campos corretamente.");
+                return;
+            }
+
+            const data = {
+                date: dateVal,
+                amount: parseFloat(amountVal),
+                description: descVal,
+                category: typeVal,
+            };
+
+            const btn = document.getElementById('submit-btn');
+            const originalText = btn.innerText;
+            btn.innerText = 'Registrando...';
+            btn.disabled = true;
+
+            try {
+                await fetch('/api/transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                document.getElementById('input-amount').value = '';
+                document.getElementById('input-desc').value = '';
+                await loadData();
+            } catch (e) {
+                alert("Erro ao salvar o lançamento.");
+                console.error(e);
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // --- Navigation Logic ---
+        document.getElementById('btn-prev-month').addEventListener('click', () => changeMonth(-1));
+        document.getElementById('btn-next-month').addEventListener('click', () => changeMonth(1));
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 1) {
+                currentMonth = 12;
+                currentYear--;
+            } else if (currentMonth > 12) {
+                currentMonth = 1;
+                currentYear++;
+            }
+            loadData();
+        }
+
+        // --- Swipe Logic ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const calendarSection = document.getElementById('calendar-section');
+
+        calendarSection.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        calendarSection.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe Left -> Next Month
+                changeMonth(1);
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe Right -> Prev Month
+                changeMonth(-1);
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>

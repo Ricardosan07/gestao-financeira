@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Extrato Detalhado</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1e94f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased pb-24">
+    <div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen flex flex-col shadow-xl">
+        <header
+            class="sticky top-0 z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center p-4 justify-between">
+                <a href="/"
+                    class="text-slate-900 dark:text-slate-100 flex size-10 items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <h1 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Extrato Detalhado</h1>
+                <div class="flex w-10 items-center justify-end">
+                    <button
+                        class="text-slate-900 dark:text-slate-100 flex size-10 items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                        <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-4 pb-3">
+                <label class="flex flex-col w-full">
+                    <div class="flex w-full items-stretch rounded-xl h-12 bg-slate-100 dark:bg-slate-800">
+                        <div class="text-slate-500 flex items-center justify-center pl-4">
+                            <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <input id="search-input"
+                            class="w-full border-none bg-transparent focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 px-4 text-base font-normal"
+                            placeholder="Buscar transações" />
+                    </div>
+                </label>
+            </div>
+
+            <div class="px-4 pb-4">
+                <div class="flex h-11 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 p-1">
+                    <label
+                        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm text-slate-500 has-[:checked]:text-primary text-sm font-semibold transition-all">
+                        <span class="truncate">Todos</span>
+                        <input checked class="hidden" name="type-filter" type="radio" value="Todos" />
+                    </label>
+                    <label
+                        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm text-slate-500 has-[:checked]:text-primary text-sm font-semibold transition-all">
+                        <span class="truncate">Entrada</span>
+                        <input class="hidden" name="type-filter" type="radio" value="Entrada" />
+                    </label>
+                    <label
+                        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm text-slate-500 has-[:checked]:text-primary text-sm font-semibold transition-all">
+                        <span class="truncate">Saída</span>
+                        <input class="hidden" name="type-filter" type="radio" value="Saída" />
+                    </label>
+                    <label
+                        class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-slate-700 has-[:checked]:shadow-sm text-slate-500 has-[:checked]:text-primary text-sm font-semibold transition-all">
+                        <span class="truncate">Investimento</span>
+                        <input class="hidden" name="type-filter" type="radio" value="Investimento" />
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-4 space-y-6" id="transaction-list">
+                <!-- Dynamic Transactions go here -->
+            </div>
+        </main>
+
+        <nav
+            class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 px-4 pb-6 pt-2 flex justify-between items-center z-50">
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+                href="/">
+                <span class="material-symbols-outlined">home</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Início</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-primary transition-colors" href="/extrato">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">list_alt</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Extrato</p>
+            </a>
+            <div class="relative -top-8 flex flex-1 justify-center">
+                <a href="/#input-date"
+                    class="size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+                    <span class="material-symbols-outlined text-3xl">add</span>
+                </a>
+            </div>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+                href="/carteiras">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Carteiras</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+                href="/perfil">
+                <span class="material-symbols-outlined">person</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Perfil</p>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function formatCurrency(value) {
+            return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatDateLabel(dateStr) {
+            const parts = dateStr.split('-');
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+
+        let allTransactions = [];
+
+        async function loadTransactions() {
+            try {
+                const res = await fetch('/api/transactions');
+                const data = await res.json();
+                allTransactions = data.transactions;
+                renderTransactions(allTransactions);
+            } catch (e) {
+                console.error("Erro ao carregar dados", e);
+            }
+        }
+
+        function renderTransactions(transactions) {
+            const historyContainer = document.getElementById('transaction-list');
+            historyContainer.innerHTML = '';
+
+            if (transactions.length === 0) {
+                historyContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Nenhum lançamento encontrado.</p>';
+                return;
+            }
+
+            // Group by date
+            const grouped = {};
+            transactions.forEach(tx => {
+                if (!grouped[tx.date]) grouped[tx.date] = [];
+                grouped[tx.date].push(tx);
+            });
+
+            const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
+
+            sortedDates.forEach(dateStr => {
+                const dateLabel = formatDateLabel(dateStr);
+
+                let groupHtml = `
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">${dateLabel}</h3>
+                    <div class="space-y-4">
+                `;
+
+                grouped[dateStr].forEach(tx => {
+                    let icon = 'add';
+                    let colorTheme = 'green-600 dark:text-green-400';
+                    let bgTheme = 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400';
+                    let typeLabel = "Entrada";
+                    let amountText = `+$${formatCurrency(tx.amount)}`;
+                    let valColor = "text-green-600 dark:text-green-400";
+
+                    if (tx.category.includes('Saídas') || tx.category.includes('Diários')) {
+                        icon = 'shopping_cart';
+                        colorTheme = 'primary';
+                        bgTheme = 'bg-primary/10 text-primary';
+                        typeLabel = tx.category.includes('Diários') ? "Variável" : "Contas Fixas";
+                        amountText = `-$${formatCurrency(tx.amount)}`;
+                        valColor = "text-red-500";
+                    }
+                    if (tx.category.includes('Investimento')) {
+                        icon = 'trending_up';
+                        colorTheme = 'primary';
+                        bgTheme = 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400';
+                        typeLabel = "Investimento";
+                        amountText = `-$${formatCurrency(tx.amount)}`;
+                        valColor = "text-primary";
+                    }
+
+                    groupHtml += `
+                    <div class="flex items-center gap-4 group cursor-pointer">
+                        <div class="size-12 rounded-xl ${bgTheme} flex items-center justify-center">
+                            <span class="material-symbols-outlined">${icon}</span>
+                        </div>
+                        <div class="flex-1 border-b border-slate-100 dark:border-slate-800 pb-4">
+                            <div class="flex justify-between items-start">
+                                <p class="font-semibold text-slate-900 dark:text-slate-100">${tx.description}</p>
+                                <p class="font-bold ${valColor}">${amountText}</p>
+                            </div>
+                            <p class="text-sm text-slate-500">${typeLabel}</p>
+                        </div>
+                    </div>
+                    `;
+                });
+
+                groupHtml += `</div></div>`;
+                historyContainer.innerHTML += groupHtml;
+            });
+        }
+
+        // Search & Filters
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        const radioFilters = document.querySelectorAll('input[name="type-filter"]');
+        radioFilters.forEach(r => r.addEventListener('change', applyFilters));
+
+        function applyFilters() {
+            const searchText = document.getElementById('search-input').value.toLowerCase();
+            const filterType = document.querySelector('input[name="type-filter"]:checked').value;
+
+            let filtered = allTransactions.filter(tx => {
+                const matchesSearch = tx.description.toLowerCase().includes(searchText);
+
+                let matchesType = true;
+                if (filterType === "Entrada") {
+                    matchesType = tx.category.includes('Entradas');
+                } else if (filterType === "Saída") {
+                    matchesType = tx.category.includes('Saídas') || tx.category.includes('Diários');
+                } else if (filterType === "Investimento") {
+                    matchesType = tx.category.includes('Investimento');
+                }
+
+                return matchesSearch && matchesType;
+            });
+
+            renderTransactions(filtered);
+        }
+
+        loadTransactions();
+    </script>
+</body>
+
+</html>

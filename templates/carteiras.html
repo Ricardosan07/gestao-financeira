@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gestão de Carteiras</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                colors: {
+                  "primary": "#1e94f6",
+                  "background-light": "#f5f7f8",
+                  "background-dark": "#101a22",
+                },
+                fontFamily: {
+                  "display": ["Inter"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+              },
+            },
+          }
+    </script>
+    <style>
+        body { min-height: max(884px, 100dvh); font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased pb-24">
+    <div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen flex flex-col shadow-xl">
+        <!-- Header Section -->
+        <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between p-4 max-w-md mx-auto w-full">
+                <a href="/" class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined text-slate-700 dark:text-slate-300">arrow_back</span>
+                </a>
+                <h1 class="text-xl font-bold tracking-tight">Minhas Carteiras</h1>
+                <button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined text-slate-700 dark:text-slate-300">more_vert</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-md mx-auto w-full px-4 pb-8">
+            <!-- Total Balance Card -->
+            <div class="mt-6 p-6 rounded-xl bg-primary shadow-lg shadow-primary/20 text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-white/80 text-sm font-medium">Saldo Total Consolidado</p>
+                    <div class="flex items-baseline gap-1 mt-1">
+                        <span class="text-lg font-medium">R$</span>
+                        <h2 class="text-3xl font-bold tracking-tight">45.280,50</h2>
+                    </div>
+                    <div class="mt-4 flex items-center gap-2 text-xs bg-white/20 w-fit px-2 py-1 rounded-full">
+                        <span class="material-symbols-outlined text-xs">trending_up</span>
+                        <span>+2.4% este mês</span>
+                    </div>
+                </div>
+                <!-- Decorative circle -->
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full"></div>
+            </div>
+
+            <!-- Section Title & Action -->
+            <div class="flex items-center justify-between mt-8 mb-4">
+                <h3 class="text-lg font-bold">Contas e Investimentos</h3>
+                <button class="text-primary text-sm font-semibold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filtrar
+                </button>
+            </div>
+
+            <!-- Accounts List -->
+            <div class="space-y-3">
+                <!-- Account: Nubank -->
+                <div class="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center size-12 rounded-lg shrink-0 overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Logotipo roxo do banco Nubank" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDXk8deS1Vq8KVAmJn7Cq1OgAY3q4y0uz-gYNViH36BEuOYUfVT2z7qHZbFR7X9EPxxGnhO_XFtjsb7VYk4p6e3cPj86uvhZCNpdwZIuymBOR2OVl7OaWQYMnpqZlawBtPP3j9UhBdjozft-8c3tjwIapzEuRYavlPK4OZ_NmN1Uba3RoFY4P-Z_1Fzif0c41H8ZHzfsrpocic26Lz__-cb5tziDZ49iC3UHMeyfkkNZpPP1d8-1vmpvvR4hePPZUBPNkFkrxmkERz')"></div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">Nubank</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Conta Corrente</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">R$ 12.450,00</p>
+                        <p class="text-[10px] text-green-500 font-medium">Principal</p>
+                    </div>
+                </div>
+
+                <!-- Account: Itaú -->
+                <div class="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center size-12 rounded-lg shrink-0 overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Logotipo laranja do banco Itaú" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSXnrBwc9qlkRKRb0-rKWUt10Aiw-v-RxsFXYwVeiGf8yLMVp4UQGMygjwtYVscStALN8Jz3wNf3fcLR5CrficoNUZv_LShB-wrFN2-_C_zRZatZ6EhPDvy4Bc-WYuHwlTk9M5ODzlqjgBu1E0KDPBA_8fo6BhJivbTJvL6g7YOOLJU0X7Kj0Edj5JEo6i1B2MzicpPSmpYUHC7VArmCtn8vvrosKz7C97X4XFKE0pmxcBLy3boL9XCssdtiNtwYUyzyWGbBYvvJG4')"></div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">Itaú Personnalité</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Conta Salário</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">R$ 8.920,50</p>
+                    </div>
+                </div>
+
+                <!-- Account: Carteira (Dinheiro) -->
+                <div class="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="bg-green-100 dark:bg-green-900/30 flex items-center justify-center size-12 rounded-lg shrink-0">
+                        <span class="material-symbols-outlined text-green-600 dark:text-green-400">payments</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">Dinheiro Físico</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Carteira</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">R$ 450,00</p>
+                    </div>
+                </div>
+
+                <!-- Account: Corretora -->
+                <div class="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center size-12 rounded-lg shrink-0">
+                        <span class="material-symbols-outlined text-primary">show_chart</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">XP Investimentos</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Corretora</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-slate-900 dark:text-slate-100">R$ 23.460,00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add New Account Button -->
+            <button class="w-full mt-6 flex items-center justify-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary border-2 border-dashed border-primary/30 py-4 rounded-xl font-bold hover:bg-primary/20 transition-colors">
+                <span class="material-symbols-outlined">add_circle</span>
+                Adicionar Nova Conta
+            </button>
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 px-4 pb-6 pt-2 flex justify-between items-center z-50">
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/">
+                <span class="material-symbols-outlined">home</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Início</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/extrato">
+                <span class="material-symbols-outlined">list_alt</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Extrato</p>
+            </a>
+            <div class="relative -top-8 flex flex-1 justify-center">
+                <a href="/#input-date" class="size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+                    <span class="material-symbols-outlined text-3xl">add</span>
+                </a>
+            </div>
+            <a class="flex flex-1 flex-col items-center gap-1 text-primary transition-colors" href="/carteiras">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_balance_wallet</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Carteiras</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/perfil">
+                <span class="material-symbols-outlined">person</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Perfil</p>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1e94f6",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen flex flex-col shadow-xl">
+        <header
+            class="flex items-center p-4 sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10 border-b border-slate-100 dark:border-slate-800">
+            <a href="/"
+                class="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-full transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1 class="text-lg font-bold flex-1 text-center mr-10">Configurações</h1>
+        </header>
+
+        <main class="flex-1 overflow-y-auto pb-24">
+            <section class="p-6">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-full bg-slate-200 dark:bg-slate-800 bg-cover bg-center border-2 border-primary"
+                            data-alt="Foto de perfil"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBAn7bWG9YPmbGr1oU5W0tyE1CVkDgrM1-McJZsWL1VIHGmQ9nJQEPE125eoWd1IsU_lOI-hkijTwpKSUtvcvDCzW526ALaNIk4E-nfo22ZgnnKPp3T8rdKCGcZTJL-F-pNo4kV7_uq2eDdCr5eAxUQKKiePNAwECIfbSOoxprdVMAYJFckoT31Jev3BOd3Tv8Pn2e8pTFfxA4dFDCl9pUsCK3ciRvfTJr1lNADtiEu67imiDmQGO1JWTVQ2EZ6fqeDRMcEsmNfNujW')">
+                        </div>
+                        <button
+                            class="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full border-2 border-white dark:border-slate-900">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col">
+                        <h2 class="text-xl font-bold">Ricardo Oliveira</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">ricardo.financas@email.com</p>
+                        <span
+                            class="mt-1 text-xs font-semibold px-2 py-0.5 bg-primary/10 text-primary rounded-full w-fit">Plano
+                            Premium</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="px-6 py-4">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Preferências de Notificação
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">notifications</span>
+                            </div>
+                            <span class="font-medium">Alertas de Gastos</span>
+                        </div>
+                        <label
+                            class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700 p-1 has-[:checked]:bg-primary transition-colors">
+                            <input checked="" class="sr-only peer" type="checkbox" />
+                            <div
+                                class="h-4 w-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">calendar_today</span>
+                            </div>
+                            <span class="font-medium">Lembretes de Contas</span>
+                        </div>
+                        <label
+                            class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700 p-1 has-[:checked]:bg-primary transition-colors">
+                            <input checked="" class="sr-only peer" type="checkbox" />
+                            <div
+                                class="h-4 w-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">insights</span>
+                            </div>
+                            <span class="font-medium">Relatórios Mensais</span>
+                        </div>
+                        <label
+                            class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700 p-1 has-[:checked]:bg-primary transition-colors">
+                            <input class="sr-only peer" type="checkbox" />
+                            <div
+                                class="h-4 w-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="px-6 py-4 mt-4 bg-slate-50 dark:bg-slate-800/50 rounded-t-xl">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-primary">thermometer</span>
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400">Regras do Termômetro</h3>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Ajuste os limites para a coloração automática
+                    dos seus gastos e orçamentos.</p>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                Limite Saudável (Verde)
+                            </label>
+                            <span class="text-xs font-bold text-primary">Até R$ 2.500</span>
+                        </div>
+                        <input
+                            class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green-500"
+                            max="10000" min="0" step="100" type="range" value="2500" />
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                Alerta de Atenção (Amarelo)
+                            </label>
+                            <span class="text-xs font-bold text-primary">R$ 2.501 - R$ 4.500</span>
+                        </div>
+                        <input
+                            class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-yellow-500"
+                            max="10000" min="0" step="100" type="range" value="4500" />
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-medium flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                Limite Crítico (Vermelho)
+                            </label>
+                            <span class="text-xs font-bold text-primary">Acima de R$ 4.500</span>
+                        </div>
+                        <input
+                            class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-red-500"
+                            max="10000" min="0" step="100" type="range" value="7000" />
+                    </div>
+                </div>
+                <button
+                    class="w-full mt-8 bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+                    Salvar Alterações
+                </button>
+            </section>
+        </main>
+
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 px-4 pb-6 pt-2 flex justify-between items-center z-50">
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/">
+                <span class="material-symbols-outlined">home</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Início</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/extrato">
+                <span class="material-symbols-outlined">list_alt</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Extrato</p>
+            </a>
+            <div class="relative -top-8 flex flex-1 justify-center">
+                <a href="/#input-date" class="size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+                    <span class="material-symbols-outlined text-3xl">add</span>
+                </a>
+            </div>
+            <a class="flex flex-1 flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="/carteiras">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Carteiras</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center gap-1 text-primary transition-colors" href="/perfil">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+                <p class="text-[10px] font-medium uppercase tracking-wider">Perfil</p>
+            </a>
+        </nav>
+    </div>
+</body>
+
+</html>
